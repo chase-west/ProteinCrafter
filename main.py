@@ -1,4 +1,7 @@
 import requests
+#Documentation for API
+#https://developer.edamam.com/edamam-docs-recipe-api-v1
+
 
 #Get app id from text file
 file = open("app_id.txt", "r")
