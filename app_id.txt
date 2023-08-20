@@ -1,1 +1,1 @@
-Enter just app id here and delete this after. 
+Enter just app id from https://developer.edamam.com//admin/applications/1409623701549 here and delete this after. 
