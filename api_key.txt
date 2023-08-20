@@ -1,0 +1,1 @@
+Enter just api key from https://developer.edamam.com//admin/applications/1409623701549 here and delete this after. 
