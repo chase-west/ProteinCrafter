@@ -25,6 +25,13 @@ response = requests.get(f"https://api.edamam.com/search?app_id={app_id}&app_key=
 
 data = response.json()
 
+#Create user class to send needed information to database
+class User:
+   def __init__(self, name, favoriteRecipes):
+      self.name = name
+      self.favoriteRecipes = favoriteRecipes
+
+
 # Extract recipe details
 currentRecipe = 0
 while currentRecipe != data['count']:
