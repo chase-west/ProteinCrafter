@@ -1,15 +1,19 @@
+from dotenv import load_dotenv
+import os
 import requests
 #Documentation for API
 #https://developer.edamam.com/edamam-docs-recipe-api-v1
 
 
-#Get app id from text file
-file = open("app_id.txt", "r")
-app_id = file.read() 
+# Load environment variables from .env file
+load_dotenv()
 
-#Get api key from text file
-file = open("api_key.txt", "r")
-api_key = file.read() 
+# Get app id from environment variables
+app_id = os.getenv("APP_ID")
+
+# Get api key from environment variables
+api_key = os.getenv("API_KEY")
+
 
 #Ask user what looking for in recipe
 foodChoice = input("Enter what food you want a recipe for: ")
