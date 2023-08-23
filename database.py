@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 import mysql.connector
-#from main import User
+from main import User
 
 #user = User()
 #user.name = "test2"
@@ -21,14 +21,74 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 mycursor.execute("USE SavedRecipes")
 
-def addValues(user):
-    sql = "INSERT INTO users (username, favoriteRecipes[]) VALUES (%s, %s)"
-    val = ("user.name", "user.favoriteRecipes")
+
+user = User()
+
+def add_to_favorite_recipes(user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals):
+    sql = "INSERT INTO Recipes (user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    values = (user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals)
+    mycursor.execute(sql, values)
+    mydb.commit()
+
+def get_user_recipes(user_id):
+    sql = "SELECT * FROM Recipes WHERE user_id = %s"
+    mycursor.execute(sql, (user_id,))
+    user_recipes = mycursor.fetchall()
+    return user_recipes
+
+
+def add_user(username):
+    sql = "INSERT INTO Users (username) VALUES (%s)"
+    val = (username,)
     mycursor.execute(sql, val)
+    mydb.commit()
+
+def display_all():
+    mycursor.execute("SELECT * FROM Users")
+    users_result = mycursor.fetchall()
+    
+    mycursor.execute("SELECT * FROM Recipes")
+    recipes_result = mycursor.fetchall()
+    
+    print("Users:")
+    for user in users_result:
+        print(user)
+        
+    print("\nRecipes:")
+    for recipe in recipes_result:
+        print(recipe)
+
+create_users_table = """
+CREATE TABLE Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL
+)
+"""
+
+#mycursor.execute(create_users_table)
 
 
-def showValues():
-    mycursor.execute("SELECT * FROM users")
-    for x in mycursor:
-        print(x)
+create_recipes_table = """
+CREATE TABLE Recipes (
+    recipe_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    recipe_name VARCHAR(100) NOT NULL,
+    ingredients TEXT NOT NULL,
+    instructions TEXT NOT NULL,
+    calories INT,
+    protein DECIMAL(10, 2),
+    carbohydrates DECIMAL(10, 2),
+    fat DECIMAL(10, 2),
+    vitamins TEXT,
+    minerals TEXT,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+)
+"""
+
+display_all()
+
+#mycursor.execute(create_recipes_table)
+
+
+
 
