@@ -31,6 +31,13 @@ class User:
       self.name = name
       self.favoriteRecipes = favoriteRecipes
 
+class FavoriteRecipeData:
+    def __init__(self, recipe):
+        self.calories = recipe['calories']
+        self.ingredients = recipe['ingredientLines']
+        self.recipeName = recipe['label']
+      
+
 
 # Extract recipe details
 currentRecipe = 0
