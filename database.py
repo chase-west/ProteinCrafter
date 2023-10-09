@@ -1,11 +1,8 @@
 from dotenv import load_dotenv
 import os
 import mysql.connector
-from main import User
 
-#user = User()
-#user.name = "test2"
-#user.favoriteRecipes = 
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -21,8 +18,22 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 mycursor.execute("USE SavedRecipes")
 
+def get_all_users():
+    sql = "SELECT * FROM Users"
+    mycursor.execute(sql)
+    all_users = mycursor.fetchall()
+    return all_users
 
-user = User()
+
+def get_user_id_by_username(username):
+    sql = "SELECT user_id FROM Users WHERE username = %s"
+    mycursor.execute(sql, (username,))
+    result = mycursor.fetchone()
+    if result:
+        return result[0]  # Return the user_id
+    else:
+        return None  # User not found
+
 
 def add_to_favorite_recipes(user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals):
     sql = "INSERT INTO Recipes (user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -35,7 +46,6 @@ def get_user_recipes(user_id):
     mycursor.execute(sql, (user_id,))
     user_recipes = mycursor.fetchall()
     return user_recipes
-
 
 def add_user(username):
     sql = "INSERT INTO Users (username) VALUES (%s)"
@@ -58,6 +68,7 @@ def display_all():
     for recipe in recipes_result:
         print(recipe)
 
+
 create_users_table = """
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -67,7 +78,7 @@ CREATE TABLE Users (
 
 #mycursor.execute(create_users_table)
 
-
+#instructions = url from api call 
 create_recipes_table = """
 CREATE TABLE Recipes (
     recipe_id INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 import requests
+from database import *
 #Documentation for API
 #https://developer.edamam.com/edamam-docs-recipe-api-v1
 
@@ -15,6 +16,18 @@ app_id = os.getenv("APP_ID")
 api_key = os.getenv("API_KEY")
 
 
+#Create/user username to save favorite recipies
+allUsers = get_all_users()
+
+User = input("What is your username: ")
+
+if User not in allUsers:
+   add_user(User)
+
+
+
+
+
 #Ask user what looking for in recipe
 foodChoice = input("Enter what food you want a recipe for: ")
 proteinAmount = input("Enter how much protein you need: ")
@@ -22,21 +35,11 @@ calorieChoice = input("Enter the range of calories you want (Ex: 300-400): ")
 
 
 response = requests.get(f"https://api.edamam.com/search?app_id={app_id}&app_key={api_key}&q={foodChoice}&nutrients[PROCNT]={proteinAmount}&calories={calorieChoice}")
-
 data = response.json()
 
-#Create user class to send needed information to database
-class User:
-   def __init__(self, name, favoriteRecipes):
-      self.name = name
-      self.favoriteRecipes = favoriteRecipes
 
-class FavoriteRecipeData:
-    def __init__(self, recipe):
-        self.calories = recipe['calories']
-        self.ingredients = recipe['ingredientLines']
-        self.recipeName = recipe['label']
-      
+#Get user id
+user_id = get_user_id_by_username(User)
 
 
 # Extract recipe details
@@ -53,7 +56,8 @@ while currentRecipe != data['count']:
 
 
   # Display recipe details
-  print("\n\nRecipe Label:", label)
+  print(f"\n\nRecipe Number {currentRecipe}")
+  print("Recipe Name:", label)
   print("Image URL:", image)
   print("Source:", source)
   print("URL:", url)
@@ -73,5 +77,7 @@ while currentRecipe != data['count']:
       nutrient_unit = nutrient_data['unit']
       print(f"- {nutrient_label}: {nutrient_quantity:.2f} {nutrient_unit}")
   currentRecipe += 1
+
+
 
 print(response.status_code)
