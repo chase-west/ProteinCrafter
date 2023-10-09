@@ -2,8 +2,6 @@ from dotenv import load_dotenv
 import os
 import mysql.connector
 
-
-
 # Load environment variables from .env file
 load_dotenv()
 
@@ -68,6 +66,14 @@ def display_all():
     for recipe in recipes_result:
         print(recipe)
 
+
+
+
+#In case you need to remove user
+def remove_user_by_id(user_id):
+    sql = "DELETE FROM Users WHERE user_id = %s"
+    mycursor.execute(sql, (user_id,))
+    mydb.commit()
 
 create_users_table = """
 CREATE TABLE Users (
