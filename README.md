@@ -1,7 +1,7 @@
 # High Protein Recipe Finder
 
 # Overview
-High Protein Recipe Finder is a sophisticated Python application designed to help you discover high-protein recipes and explore a wide range of calorie options. With its seamless integration with the Edamam API and local SQL database, you can now embark on a culinary journey to find delectable high-protein dishes.
+ProteinCrafter is a sophisticated Python application designed to help you discover high-protein recipes and explore a wide range of calorie options. With its seamless integration with the Edamam API and local SQL database, you can now embark on a culinary journey to find delectable high-protein dishes.
 
 # Features
 - High-Protein Recipe Search: Discover a vast collection of high-protein recipes, tailored to your dietary preferences.
@@ -48,4 +48,4 @@ This project is licensed under the MIT License.
 # Contact
 For any inquiries or feedback, please contact Chase at (chasewestbusiness@gmail.com).
 
-Thank you for using High Protein Recipe Finder. Enjoy your culinary adventures and stay healthy! 🍽🥦🥩
+Thank you for using ProteinCrafter. Enjoy your culinary adventures and stay healthy! 🍽🥦🥩
