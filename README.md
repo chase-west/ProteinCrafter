@@ -1,5 +1,5 @@
 # High Protein Recipe Finder
-
+![image](https://github.com/chase-west/ProteinCrafter/assets/57733840/763f6bd1-bfef-4266-b768-22dfbaa475e5)
 # Overview
 ProteinCrafter is a sophisticated Python application designed to help you discover high-protein recipes and explore a wide range of calorie options. With its seamless integration with the Edamam API and local SQL database, you can now embark on a culinary journey to find delectable high-protein dishes.
 
