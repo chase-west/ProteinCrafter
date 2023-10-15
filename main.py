@@ -46,7 +46,7 @@ proteinAmount = input("Enter how much protein do you need (Ex: 30): ")
 calorieChoice = input("Enter the range of calories you want (Ex: 300-400): ")
 
 
-response = requests.get(f"https://api.edamam.com/search?app_id={app_id}&app_key={api_key}&q={foodChoice}&nutrients[PROCNT]={proteinAmount}&calories={calorieChoice}")
+response = requests.get(f"https://api.edamam.com/search?app_id={app_id}&app_key={api_key}&q={foodChoice}&nutrients[PROCNT]={proteinAmount}&calories={calorieChoice}", timeout=5)
 data = response.json()
 
 #Create recipe object for each recipe
