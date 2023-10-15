@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 import mysql.connector
+import json 
 
 # Load environment variables from .env file
 load_dotenv()
@@ -34,8 +35,10 @@ def get_user_id_by_username(username):
 
 
 def add_to_favorite_recipes(user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals):
+    vitamins_json = json.dumps(vitamins)
+    minerals_json = json.dumps(minerals)
     sql = "INSERT INTO Recipes (user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    values = (user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins, minerals)
+    values = (user_id, recipe_name, ingredients, instructions, calories, protein, carbohydrates, fat, vitamins_json, minerals_json)
     mycursor.execute(sql, values)
     mydb.commit()
 
