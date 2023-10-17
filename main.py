@@ -89,23 +89,44 @@ def extract_nutritional_info(recipe_data):
 #Create an array to store recipe objects
 recipes_list = []
 
+
+# Dictionary that maps vitamin abbreviations to their full names
+vitaminAndMineral_Names = {
+    'VITA_RAE': 'Vitamin A',
+    'VITC': 'Vitamin C',
+    'VITB6A': 'Vitamin B6',
+    'VITB12': 'Vitamin B12',
+    'CA': 'Calcium',
+    'MG': 'Magnesium',
+    'FE': 'Iron',
+    'FOLDFE': 'Folate',
+}
 #Function to display and add recipe to favorites
 def display_and_add_to_favorites(user_id, recipes_list):
     for idx, recipe in enumerate(recipes_list):
         print(f"Recipe Number {idx + 1}:")
         print("Recipe Name:", recipe.recipe_name)
         print("Instructions:", recipe.instructions)
-        print("Calories:", recipe.calories)
         print("Ingredients:")
         for ingredient in recipe.ingredients:
             print("- " + ingredient)
-        print("Nutritional Information:")
-        print(f"Protein: {protein:.2f} grams")
-        print(f"Carbohydrates: {carbohydrates:.2f} grams")
-        print(f"Fat: {fat:.2f} grams")
-        print(f"Calories: {calories}")
-        print("Vitamins:", ', '.join([f"{nutrient}: {value:.2f}" for nutrient, value in vitamins.items()]))
-        print("Minerals:", ', '.join([f"{nutrient}: {value:.2f}" for nutrient, value in minerals.items()]))
+        print("\nNutritional Information:")
+        print(f"Protein: {recipe.protein:.2f} grams")
+        print(f"Carbohydrates: {recipe.carbohydrates:.2f} grams")
+        print(f"Fat: {recipe.fat:.2f} grams")
+        print(f"Calories: {recipe.calories:.2f}")
+        print("Vitamins:")
+        for nutrient, value in recipe.vitamins.items():
+            nutrient_name = vitaminAndMineral_Names.get(nutrient, nutrient)
+            if nutrient_name == 'ENERC_KCAL':
+                continue
+            print(f"- {nutrient_name}: {value:.2f}")
+        print("Minerals:")
+        for nutrient, value in recipe.minerals.items():
+            nutrient_name = vitaminAndMineral_Names.get(nutrient, nutrient)
+            if nutrient_name == 'ENERC_KCAL':
+                continue
+            print(f"- {nutrient_name}: {value:.2f}")
         print("\n\n\n")
     while True:
         num = int(input("Enter the number of the recipe you want to favorite (or 0 to exit): "))
@@ -172,13 +193,16 @@ for recipe_data in data.get('hits', []):
 
 
 #Add to favorite recipes
-userChoice = input("Would you like to add a recipe to favorites? (y/n): ")
-if userChoice == 'y':
-    display_and_add_to_favorites(user_id, recipes_list)
+end = True
+while end == True:
+    userChoice = input("Would you like to add a recipe to favorites? (y/n): ")
+    if userChoice == 'y':
+        display_and_add_to_favorites(user_id, recipes_list)
+        end = False
 
-elif userChoice == 'n':
-    exit()
+    elif userChoice == 'n':
+        exit()
 
-else:
-    print("Invalid choice.")
+    else:
+        print("Invalid choice.")
 
